@@ -1,0 +1,12 @@
+{
+    "missav_proxy": {
+        "description": "代理地址，例如 http://127.0.0.1:7890",
+        "type": "string",
+        "default": ""
+    },
+    "missav_blur_level": {
+        "description": "封面图片模糊程度，0为不模糊，数值越大越模糊",
+        "type": "int",
+        "default": 20
+    }
+}
