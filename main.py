@@ -20,14 +20,14 @@ PUBLIC_TOKEN = "Ikkg568nlM51RHvldlPvc2GzZPE9R4XGzaH9Qj4zK9npbbbTly1gj9K4mgRn0QlV
 
 @register("missav", "vmoranv", "MissAV视频信息查询插件", "1.0.0")
 class MissAVPlugin(Star):
-    def __init__(self, context: Context):
+    def __init__(self, context: Context, config: dict):
         super().__init__(context)
-        self.config = None
+        self.config = config or {}
+        logger.info(f"MissAV 插件配置已加载: {self.config}")
 
     async def initialize(self):
         os.makedirs(CACHE_DIR, exist_ok=True)
         self._clean_cache()
-        self.config = self.context.get_config()
 
     def _clean_cache(self):
         for f in glob.glob(os.path.join(CACHE_DIR, "*")):
@@ -37,12 +37,12 @@ class MissAVPlugin(Star):
                 pass
 
     def _get_proxy(self):
-        cfg = self.config or {}
-        return cfg.get("missav_proxy", "")
+        return self.config.get("missav_proxy", "")
 
     def _get_blur_level(self):
-        cfg = self.config or {}
-        return cfg.get("missav_blur_level", 20)
+        return self.config.get("missav_blur_level", 20)
+
+
 
     def _blur_image(self, img_path: str) -> str:
         blur = self._get_blur_level()
