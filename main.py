@@ -71,7 +71,7 @@ class MissAVPlugin(Star):
         signature = hmac.new(PUBLIC_TOKEN.encode("utf-8"), unsigned.encode("utf-8"), hashlib.sha1).hexdigest()
         return unsigned + f"&frontend_sign={signature}"
 
-    async def _fetch(self, url: str) -> str:
+    async def _fetch(self, url: str) -> tuple[int, str]:
         proxy = self._get_proxy()
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -81,7 +81,7 @@ class MissAVPlugin(Star):
         }
         async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=headers, proxy=proxy if proxy else None) as resp:
-                return await resp.text()
+                return resp.status, await resp.text()
 
     async def _post_json(self, path: str, json_body: dict):
         signed_path = self._sign_path(path)
@@ -110,8 +110,16 @@ class MissAVPlugin(Star):
 
     async def _get_video_info(self, video_id: str):
         url = BASE_URL + video_id
-        content = await self._fetch(url)
+        status, content = await self._fetch(url)
+        
+        if status == 404:
+            return None
+            
         soup = BeautifulSoup(content, "lxml")
+        
+        title_el = soup.find("h1")
+        if title_el and ("找不到页面" in title_el.text or "404" in title_el.text):
+            return None
         
         # 查找所有信息容器
         info_container = soup.find("div", class_="space-y-2")
@@ -241,6 +249,9 @@ class MissAVPlugin(Star):
         self._clean_cache()
         try:
             video = await self._get_video_info(video_id)
+            if not video:
+                yield event.plain_result(f"未找到番号为 {video_id} 的影片信息。")
+                return
             
             # 获取配置的显示字段
             display_fields = self.config.get("display_fields", ["番号", "标题", "中文标题", "发行日期", "详情", "女优", "男优", "类型", "发行商", "系列", "磁链", "封面"])
