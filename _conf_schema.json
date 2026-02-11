@@ -1,12 +1,53 @@
 {
-    "missav_proxy": {
-        "description": "代理地址，例如 http://127.0.0.1:7890",
-        "type": "string",
-        "default": ""
+    "display_fields": {
+        "description": "显示属性选择",
+        "type": "list",
+        "hint": "选择需要回复显示的属性项",
+        "options": [
+            "番号",
+            "标题",
+            "中文标题",
+            "发行日期",
+            "详情",
+            "女优",
+            "男优",
+            "类型",
+            "发行商",
+            "系列",
+            "磁链",
+            "封面"
+        ],
+        "default": [
+            "番号",
+            "标题",
+            "中文标题",
+            "发行日期",
+            "详情",
+            "女优",
+            "男优",
+            "类型",
+            "发行商",
+            "系列",
+            "磁链",
+            "封面"
+        ]
+    },
+    "enable_forward": {
+        "description": "开启合并转发",
+        "type": "bool",
+        "hint": "开启后，如果平台支持（如 aiocqhttp），将以合并转发的形式发送影片信息。",
+        "default": false
     },
     "missav_blur_level": {
-        "description": "封面图片模糊程度，0为不模糊，数值越大越模糊",
+        "description": "封面图片模糊程度",
+        "hint": "0为不模糊，数值越大越模糊",
         "type": "int",
-        "default": 20
+        "default": 5
+    },
+    "missav_proxy": {
+        "description": "代理地址",
+        "hint": "如 http://127.0.0.1:7890",
+        "type": "string",
+        "default": ""
     }
 }

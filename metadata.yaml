@@ -1,5 +1,6 @@
-name: "missav"
-author: "vmoranv"
-desc: "MissAV视频信息查询插件，支持搜索和获取视频信息"
-version: "1.0.0"
-repo: "https://github.com/vmoranv/astrbot_plugin_missAV"
+name: astrbot_plugin_missAV
+display_name: MissAV
+desc: MissAV 视频信息查询插件，支持搜索和获取视频信息
+version: v1.1.0
+author: vmoranv&Foolllll
+repo: https://github.com/vmoranv/astrbot_plugin_missAV

@@ -9,9 +9,12 @@ MissAV视频信息查询插件
 
 ## 配置
 
-在AstrBot配置中可设置：
-- `missav_proxy` - 代理地址（可选）
-- `missav_blur_level` - 封面图模糊程度（0为不模糊，默认20）
+在 AstrBot 管理面板中可设置：
+
+- `display_fields` - 显示属性选择。可选：番号、标题、中文标题、发行日期、详情、女优、男优、类型、发行商、系列、磁链、封面。
+- `enable_forward` - 是否开启合并转发形式发送影片信息（仅支持 aiocqhttp 平台）。
+- `missav_blur_level` - 封面图模糊程度（0为不模糊，默认5）。
+- `missav_proxy` - 代理地址，例如 `http://127.0.0.1:7890`。
 
 ## 安装
 
